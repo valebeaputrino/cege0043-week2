@@ -14,8 +14,38 @@ crossorigin=""></script>
 #mapid { height: 180px; }
 	</style>
 <script>
-function loadEarthquakeData() {
-alert("load the data here");
+	function loadEarthquakeData() {
+alert("Loading Earthquakes");
+getEarthquakes();
+}
+var client;
+function getEarthquakes() {
+client = new XMLHttpRequest();
+client.open('GET','https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
+client.onreadystatechange = earthquakeResponse; 
+client.send();
+}
+function earthquakeResponse() {
+	if (client.readyState == 4) {
+var earthquakedata = client.responseText;
+loadEarthquakelayer(earthquakedata);
+	}
+}
+
+	function loadEarthquakelayer(earthquakedata) {
+var earthquakejson = JSON.parse(earthquakedata);
+earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
+mymap.fitBounds(earthquakelayer.getBounds());
+}
+
+//for the second button
+function removeEarthquakeData() {
+alert("remove the earthquake data here");
+	}
+	var earthquakelayer;	
+	function removeEarthquakeData() {
+	alert("Earthquake data will be removed");
+	mymap.removeLayer( earthquakelayer );	
 }
 </script>	
 
@@ -24,8 +54,9 @@ alert("load the data here");
 
 <!-- the mapid div will hold the map -->
 <div id="mapid" style="width: 600px; height: 400px;"></div>
-<button id="loadData" name="loadData" onclick="loadEarthquakeData()">Click here to load the
-data </button>
+<button id="loadData" name="loadData" onclick="loadEarthquakeData()">Click here to load the data </button>
+
+<button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
 
 <!-- the following script will load the map and set the default view and zoom, as well as loading the
 basemap tiles -->
