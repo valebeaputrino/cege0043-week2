@@ -64,11 +64,17 @@ var geojsonFeature = {
 "coordinates": [51.524159, -0.134211]
 }
 };
-// and add it to the map
-L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
-
 //create the custom Makrker icon (point 3.)
 var testMarkerPink = L.AwesomeMarkers.icon({
 icon: 'play',
 markerColor: 'pink'
 });
+// and add it to the map
+// (comment this line was in the code) L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
+// the line below is point 4. 
+L.geoJSON(geojsonFeature, {
+pointToLayer: function (feature, latlng) {
+return L.marker(latlng, {icon:testMarkerPink});
+}
+}).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+"
+"+geojsonFeature.properties.popupContent+"<b>");
