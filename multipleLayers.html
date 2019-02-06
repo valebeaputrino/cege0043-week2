@@ -37,8 +37,6 @@ loadEarthquakelayer(earthquakedata);
 var earthquakejson = JSON.parse(earthquakedata);
 earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
 mymap.fitBounds(earthquakelayer.getBounds());
-//test making a change
-
 }
 
 //for the second button
@@ -73,10 +71,10 @@ var earthquakejson = JSON.parse(earthquakedata);
 earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
 mymap.fitBounds(earthquakelayer.getBounds());
 }
+function removeEarthquakeData() {
+alert("remove the earthquake data here");
 }
-//for the third button
-<button id="removeEarthquakeData" name="removeEarthquakeData"
-onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
+
 </script>	
 
 </head>
@@ -87,6 +85,9 @@ onclick="removeEarthquakeData()">Click here to remove the Earthquake data </butt
 <button id="loadData" name="loadData" onclick="loadEarthquakeData()">Click here to load the data </button>
 
 <button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
+<!-- button to remove the earthquakes -->
+<button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
+
 
 <!-- the following script will load the map and set the default view and zoom, as well as loading the
 basemap tiles -->
