@@ -14,6 +14,7 @@ crossorigin=""></script>
 #mapid { height: 180px; }
 	</style>
 <script>
+//for the first button
 	function loadEarthquakeData() {
 alert("Loading Earthquakes");
 getEarthquakes();
@@ -36,6 +37,8 @@ loadEarthquakelayer(earthquakedata);
 var earthquakejson = JSON.parse(earthquakedata);
 earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
 mymap.fitBounds(earthquakelayer.getBounds());
+//test making a change
+
 }
 
 //for the second button
@@ -47,6 +50,33 @@ alert("remove the earthquake data here");
 	alert("Earthquake data will be removed");
 	mymap.removeLayer( earthquakelayer );	
 }
+
+function loadEarthquakeData() {
+	alert("Loading Earthquakes");
+	getEarthquakes();
+	}
+	var client;
+	function getEarthquakes() {
+client = new XMLHttpRequest();
+client.open('GET','https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
+client.onreadystatechange = earthquakeResponse; // note don't use earthquakeResponse() with brackets as that doesn't work
+client.send();
+}
+function earthquakeResponse() {
+if (client.readyState == 4) {
+var earthquakedata = client.responseText;
+loadEarthquakelayer(earthquakedata);
+}
+}
+function loadEarthquakelayer(earthquakedata) {
+var earthquakejson = JSON.parse(earthquakedata);
+earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
+mymap.fitBounds(earthquakelayer.getBounds());
+}
+}
+//for the third button
+<button id="removeEarthquakeData" name="removeEarthquakeData"
+onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
 </script>	
 
 </head>
