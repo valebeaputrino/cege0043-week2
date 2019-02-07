@@ -1,13 +1,14 @@
 <html>
 <head>
 <title>Test HTML Distance Functionality</title>
+
 <script>
 function getDistance() {
 	alert('getting distance');
 	navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
 	}
 	
-Function getDistanceFromPoint(position) {
+function getDistanceFromPoint(position) {
 //find distance to Angel Station
 // these are the coordinate of angel station
 	var lat = 51.531831;
@@ -25,17 +26,16 @@ Function getDistanceFromPoint(position) {
 	var radlon2 = Math.PI * lon2/180;
 	var theta = lon1-lon2;
 	var radtheta = Math.PI * theta/180;
-	var subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);subAngle = Math.acos(subAngle);
-		subAngle = subAngle * 180/Math.PI; // convert the degree value returned by acos back to degrees from radians 
-		dist = (subAngle/360) * 2 * Math.PI * 3956; //((subtended angle in degrees)/360) * 2 * pi * radius )
-													// where radius of the earth is 3956 miles
+	var subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);subAngle = Math.acos(subAngle);subAngle = subAngle * 180/Math.PI;dist = (subAngle/360) * 2 * Math.PI * 3956; //((subtended angle in degrees)/360) * 2 * pi * radius )
 	if (unit=="K") { dist = dist * 1.609344 ;} // convert miles to km
 	if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles
 	return dist;
-	</script>
+	}
+</script>
+
 </head>
 <body>
 <b>This code will display your current location</b>
 <div id='showDistance'>Distance will be displayed here</div>
-<button id='getDistance' onclick=getDistance()>Click Me to Calculate Distance</button>
+<button id='getDistance' onclick='getDistance()'>Click Me to Calculate Distance</button>
 </body>
