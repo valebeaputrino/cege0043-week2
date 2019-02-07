@@ -71,10 +71,42 @@ var earthquakejson = JSON.parse(earthquakedata);
 earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
 mymap.fitBounds(earthquakelayer.getBounds());
 }
-function removeEarthquakeData() {
-alert("remove the earthquake data here");
-}
 
+//for the bus button
+	function loadBusData() {
+alert("Bus Data will be loaded");
+getBusdata();
+}
+var client;
+function loadBusData() {
+client = new XMLHttpRequest();
+client.open('GET','https://developer.cege.ucl.ac.uk:31107/cege0043-week2/busstops.geojson');
+client.onreadystatechange = dataResponse;
+client.send();
+}
+function dataResponse() {
+if (client.readyState == 4) {
+var geoJSONData = client.responseText;
+loadLayer(geoJSONData);
+}
+}
+function loadLayer(geoJSONData) {
+	if (geoJSONData.indexOf("earthquake") > 0) {
+		var loadingEarthquakes = true;
+	}
+	if (geoJSONData.indexOf("IIT_METHOD") > 0) {
+		var loadingBusstops = true;
+	}
+	var json = JSON.parse(geoJSONData);
+	if (loadingEarthquakes === true){
+		earthquakelayer = L.geoJson(json).addTo(mymap);
+		mymap.fitBounds(earthquakelayer.getBounds());
+	}
+if (loadingBusstops === true){
+busstoplayer = L.geoJson(json).addTo(mymap);
+mymap.fitBounds(busstoplayer.getBounds());
+}
+}
 </script>	
 
 </head>
@@ -83,10 +115,11 @@ alert("remove the earthquake data here");
 <!-- the mapid div will hold the map -->
 <div id="mapid" style="width: 600px; height: 400px;"></div>
 <button id="loadData" name="loadData" onclick="loadEarthquakeData()">Click here to load the data </button>
-
-<button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
 <!-- button to remove the earthquakes -->
 <button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
+<!-- load bus data -->
+<button id="loadBusData" name="loadBusData" onclick="loadBusData()">Click here to add Busdata </button>
+
 
 
 <!-- the following script will load the map and set the default view and zoom, as well as loading the
